@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>E-Commerce App with AI</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/chatbot.css">
+    <style>
+        /* Android-like styles */
+        :root {
+            --safe-area-top: env(safe-area-inset-top);
+            --safe-area-bottom: env(safe-area-inset-bottom);
+        }
+
+        body {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            background: #f5f5f5;
+            overscroll-behavior: none;
+        }
+
+        .status-bar {
+            height: var(--safe-area-top, 20px);
+            background: #4c6daf;
+        }
+
+        /* Top app header with logo - Premium Look */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: #ffffff;
+            /* Clean white background */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            /* Very soft drop shadow */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .top-header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #333;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo img,
+        .brand-logo video {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            /* Flat + Soft 3D, no heavy outer glow */
+            background: #fff;
+            /* Gloss only on globe & cart matter finish are in the asset itself */
+        }
+
+        .brand-logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            color: #2E7D32;
+            /* Text clean solid green */
+            text-shadow: none;
+            /* No heavy glow */
+        }
+
+        .brand-tagline {
+            font-size: 12px;
+            font-weight: 500;
+            color: #666;
+            opacity: 0.9;
+        }
+
+        .bottom-nav {
+            padding-bottom: var(--safe-area-bottom, 0px);
+        }
+
+        .app-container {
+            height: calc(100vh - var(--safe-area-top, 20px) - 64px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Material Design-like ripple effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .2;
+            transition: 0s;
+        }
+
+        /* Smooth scrolling for products */
+        .scroll-smooth {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Product card hover effect */
+        .product-card {
+            transition: transform 0.2s ease;
+        }
+
+        .product-card:active {
+            transform: scale(0.98);
+        }
+
+        /* Loading animation */
+        .loading {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-200">
+    <div class="status-bar"></div>
+    <header class="top-header">
+        <div class="top-header-inner">
+            <div class="brand-logo">
+                <!-- Main Logo -->
+                <img src="assets/ShopSphere.png" alt="ShopSphere logo">
+                <div>
+                    <div class="brand-logo-text">ShopSphere</div>
+                    <div class="brand-tagline">Fast & smart online shopping</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="app" class="app-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+    <script src="js/data.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/payment.js" defer></script>
+    <script src="js/chatbot.js" defer></script>
+
+    <!-- Chatbot widget -->
+    <div id="chatbot" class="chatbot">
+        <button id="chatbot-toggle" class="chatbot-toggle" aria-label="Open chat">💬</button>
+        <div id="chatbot-panel" class="chatbot-panel" hidden>
+            <div class="chatbot-header">
+                <div class="chatbot-title">Support (24/7)</div>
+                <button id="chatbot-close" class="chatbot-close" aria-label="Close">✕</button>
+            </div>
+            <div id="chatbot-messages" class="chatbot-messages" role="log" aria-live="polite"></div>
+            <form id="chatbot-form" class="chatbot-form">
+                <input id="chatbot-input" class="chatbot-input" placeholder="Ask a question..." autocomplete="off" />
+                <button type="submit" class="chatbot-send">Send</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

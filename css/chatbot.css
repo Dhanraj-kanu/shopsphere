@@ -1,0 +1,130 @@
+/* Chatbot widget styles */
+#chatbot {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+
+.chatbot-toggle {
+  background: #2563EB;
+  color: #fff;
+  border: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.chatbot-panel {
+  width: 320px;
+  max-width: 90vw;
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  background: #f3f4f6;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.chatbot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: linear-gradient(90deg, #2563EB, #06B6D4);
+  color: #fff;
+}
+
+.chatbot-title {
+  font-weight: 600;
+}
+
+.chatbot-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.chatbot-messages {
+  flex: 1;
+  padding: 12px;
+  overflow: auto;
+  background: #f3f4f6;
+}
+
+.chatbot-form {
+  display: flex;
+  border-top: 1px solid #eee;
+  padding: 8px;
+}
+
+.chatbot-input {
+  flex: 1;
+  border: 1px solid #e5e7eb;
+  padding: 8px 10px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.chatbot-send {
+  background: #10B981;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.msg {
+  margin: 8px 0;
+  max-width: 85%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.msg-user {
+  background: #d1d5db;
+  margin-left: auto;
+}
+
+.msg-bot {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+}
+
+.msg[data-typing="true"] {
+  background: #f0f0f0;
+  color: #666;
+  font-style: italic;
+  animation: pulse-typing 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-typing {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width:480px) {
+  .chatbot-panel {
+    width: 95vw;
+    right: 8px;
+    bottom: 80px;
+    height: 60vh;
+  }
+}
