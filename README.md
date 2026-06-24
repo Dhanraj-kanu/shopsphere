@@ -96,8 +96,8 @@ open cmd
 ----Connect to ngrok 
 ----ngrok http 5173
 
-## Admin Email :admin@example.com
-## Password : admin123
+## Admin Email: Contact Us
+## Password : 
 
 4. **Open your browser:**
    - Navigate to `http://localhost:3000`
