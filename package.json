@@ -1,0 +1,14 @@
+{
+  "name": "e-commerce-app-with-ai",
+  "private": true,
+  "version": "1.0.0",
+  "description": "E-commerce website with Razorpay payments and AI chatbot support.",
+  "main": "backend/server.js",
+  "scripts": {
+    "dev": "node backend/server.js",
+    "server": "node backend/server.js",
+    "start": "node backend/server.js",
+    "client": "cd frontend && npm run dev",
+    "setup": "cd backend && npm install && cd ../frontend && npm install"
+  }
+}
